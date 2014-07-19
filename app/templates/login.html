@@ -1,0 +1,15 @@
+<!--- extend dat shit --->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Sign In nigga</h1>
+<form action="" method="post" name="login">
+    {{form.hidden_tag()}}
+    <p>
+        Please enter your OpenID:<BR>
+        {{form.openid(size=80)}}<BR>
+    </p>
+    <p>{{form.remember_me}} Remember Me</p>
+    <p><input type="submit" value="Sign In"</p>
+</form>
+{% endblock %}
