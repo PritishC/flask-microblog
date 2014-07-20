@@ -45,6 +45,11 @@ def login():
                            form=login_form,
                            providers=app.config['OPENID_PROVIDERS'])
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
 @oid.after_login
 def after_login(resp):
     if resp.email is None or resp.email == "":
@@ -72,3 +77,4 @@ def load_user(id):
 @app.before_request
 def before_request():
     g.user = current_user
+    
