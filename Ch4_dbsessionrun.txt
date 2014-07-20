@@ -1,0 +1,81 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jul 20 14:57:44 2014
+
+@author: pritishc
+"""
+
+Python 2.7.6 (default, Mar 22 2014, 22:59:56) 
+[GCC 4.8.2] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from app import db, models
+>>> u = models.User(nickname='faggot', email='op@4chan.org', role=models.ROLE_USER)
+>>> db.session.add(u)
+>>> db.session.commit()
+>>> u = models.User(nickname='susan', email='shushan@email.com', role=models.ROLE_USER)
+>>> db.session.add(u)
+>>> db.session.commit()
+>>> users = models.User.query.all()
+>>> print users
+[<User u'faggot'>, <User u'susan'>]
+>>> for u in users:
+...     print(u.id, u.nickname)
+... 
+(1, u'faggot')
+(2, u'susan')
+>>> u = models.User.query.get(1)
+>>> print(u)
+<User u'faggot'>
+>>> import datetime
+>>> u = models.User.query.get(1)
+>>> p = models.Post(body='op is a faggot', timestamp=datetime.datetime.utcnow(), author=u)
+>>> db.session.add(p)
+>>> db.session.commit()
+>>> # now get all posts
+... u = models.User.query.get(1)
+>>> print(u)
+<User u'faggot'>
+>>> posts = u.posts.all()
+>>> print(posts)
+[<Post u'op is a faggot']
+>>> # get author of each post
+... for p in posts:
+...     print(p.id, p.author,p.nickname,p.body)
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+AttributeError: 'Post' object has no attribute 'nickname'
+>>>     print(p.id, p.author.nickname,p.body)
+  File "<stdin>", line 1
+    print(p.id, p.author.nickname,p.body)
+    ^
+IndentationError: unexpected indent
+>>> for p in posts:
+...     print(p.id, p.author.nickname,p.body)
+... 
+(1, u'faggot', u'op is a faggot')
+>>> # user with no posts
+... u = models.User.query.get(2)
+>>> print(u)
+<User u'susan'>
+>>> print u.posts.all()
+[]
+>>> # get all users in reverse alphabetical order
+... print models.User.query,order_by('nickname desc').all()
+SELECT "user".id AS user_id, "user".nickname AS user_nickname, "user".email AS user_email, "user".role AS user_role 
+FROM "user"
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+NameError: name 'order_by' is not defined
+>>> print models.User.query.order_by('nickname desc').all()
+[<User u'susan'>, <User u'faggot'>]
+>>> # now erase all that we have done
+... for u in users:
+...     db.session.delete(u)
+... 
+>>> posts = models.Post.query.all()
+>>> for p in posts:
+...     db.session.delete(p)
+... 
+>>> db.session.commit()
+>>> 
