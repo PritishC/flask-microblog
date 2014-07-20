@@ -10,6 +10,7 @@
         {{form.openid(size=80)}}<BR>
         {% for error in form.errors.openid %}
         <span style="color: red;">[{{error}}]</span>
+        {% endfor %}
     </p>
     <p>{{form.remember_me}} Remember Me</p>
     <p><input type="submit" value="Sign In"</p>
