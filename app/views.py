@@ -35,4 +35,5 @@ def login():
         '", remember_me=' + str(login_form.remember_me.data))
     return render_template('login.html',
                            title='Sign In',
-                           form=login_form)
+                           form=login_form,
+                           providers=app.config['OPENID_PROVIDERS'])
