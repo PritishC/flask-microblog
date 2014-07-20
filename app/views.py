@@ -12,8 +12,9 @@ from models import User, ROLE_USER, ROLE_ADMIN
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
-    user = {'nickname': 'Miguel'} # fake user
+    user = g.user
     posts = [ #an array of fake posts
         {
             'author': {'nickname': 'John'},
@@ -49,7 +50,7 @@ def after_login(resp):
     if resp.email is None or resp.email == "":
         flash('Invalid login. Please try again.')
         return redirect(url_for('login'))
-    user = user.query.filter_by(email = resp.email).first()
+    user = User.query.filter_by(email = resp.email).first()
     if user is None:
         nickname = resp.nickname
         if nickname is None or nickname == "":
