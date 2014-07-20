@@ -37,3 +37,7 @@ def login():
                            title='Sign In',
                            form=login_form,
                            providers=app.config['OPENID_PROVIDERS'])
+                          
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))
