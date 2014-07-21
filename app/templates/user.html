@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>User: {{user.nickname}}!</h1>
+<table>
+    <tr valign="top">
+        <td><img src="{{user.avarar(128)}}"></td>
+        <td><h1>User: {{user.nickname}}!</h1></td>
+    </tr>
+</table>
 <hr>
 {% for post in posts %}
 <p>
