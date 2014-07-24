@@ -21,10 +21,10 @@ OPENID_PROVIDERS = [
     { 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
     
 # mail server settings
-MAIL_SERVER = 'smtp.guerrillamail.com'
+MAIL_SERVER = 'smtp.googlemail.com'
 MAIL_PORT = 25
-MAIL_USERNAME = 'pritish@guerrillamail.com'
-MAIL_PASSWORD = None
+MAIL_USERNAME = 'fakeusepritish@gmail.com'
+MAIL_PASSWORD = 'ifreakingknewit'
 
 # admin list
-ADMINS = ['pritish@guerrillamail.com, chakrabortypritish@gmail.com']
+ADMINS = ['pritish@guerrillamail.com', 'chakrabortypritish@gmail.com']
