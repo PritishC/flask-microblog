@@ -19,3 +19,12 @@ OPENID_PROVIDERS = [
     { 'name': 'AOL', 'url': 'http://openid.aol.com/<username>' },
     { 'name': 'Flickr', 'url': 'http://www.flickr.com/<username>' },
     { 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
+    
+# mail server settings
+MAIL_SERVER = 'smtp.google.com'
+MAIL_PORT = 25
+MAIL_USERNAME = pritish@guerrillamail.com
+MAIL_PASSWORD = None
+
+# admin list
+ADMINS = ['pritish@guerrillamail.com, chakrabortypritish@gmail.com']
