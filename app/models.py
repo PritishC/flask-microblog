@@ -38,7 +38,19 @@ class User(db.Model):
     
     def __repr__(self):
         return '<User {0!r}>'.format(self.nickname) # repr formatting.
-        
+    
+    @staticmethod
+    def make_unique_nickname(nickname):
+        if User.query.filter_by(nickname = nickname).first() == None:
+            return nickname # in this case, no other user with this nickname exists, so no collisions.
+        version = 2
+        while True:
+            new_nickname = nickname + str(version)
+            if User.query.filter_by(nickname = new_nickname).first() == None:
+                break
+            version += 1
+        return new_nickname                
+                
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))

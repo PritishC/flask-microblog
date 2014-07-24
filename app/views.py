@@ -69,7 +69,7 @@ def user(nickname):
 @app.route('/edit', methods=['GET', 'POST'])                           
 @login_required
 def edit():
-    form = EditForm()
+    form = EditForm(g.user.nickname)
     if form.validate_on_submit():
         g.user.nickname = form.nickname.data
         g.user.about_me = form.about_me.data
@@ -81,6 +81,16 @@ def edit():
         form.nickname.data = g.user.nickname
         form.about_me.data = g.user.about_me
     return render_template('edit.html', form=form)
+    
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
+    
 
 @oid.after_login
 def after_login(resp):
@@ -92,7 +102,7 @@ def after_login(resp):
         nickname = resp.nickname
         if nickname is None or nickname == "":
             nickname = resp.email.split('@')[0]
-        user = User(nickname=nickname, email=resp.email, role=ROLE_USER)
+        user = User.make_unique_nickname(nickname)
         db.session.add(user)
         db.session.commit()
     remember_me = False
