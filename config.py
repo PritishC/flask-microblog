@@ -21,7 +21,7 @@ OPENID_PROVIDERS = [
     { 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
     
 # mail server settings
-MAIL_SERVER = 'smtp.google.com'
+MAIL_SERVER = 'smtp.guerrillamail.com'
 MAIL_PORT = 25
 MAIL_USERNAME = pritish@guerrillamail.com
 MAIL_PASSWORD = None
