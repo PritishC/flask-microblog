@@ -11,6 +11,13 @@ from app import db
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
+# The followers table is not written as a class.
+# Instead, flask-sqlalchemy is used to generate the table.
+# It is an association table meant to support our many-to-many relationship.
+followers = db.Table('followers',
+                     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+                     db.Column('followed_id', db.Integer, db.ForeignKey('user.id')))
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String(64), index=True, unique=True)
@@ -65,10 +72,3 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {0!r}'.format(self.body)
-
-# The followers table is not written as a class.
-# Instead, flask-sqlalchemy is used to generate the table.
-# It is an association table meant to support our many-to-many relationship.
-followers = db.Table('followers',
-                     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
-                     db.Column('followed_id', db.Integer, db.ForeignKey('user.id')))
