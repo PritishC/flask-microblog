@@ -100,7 +100,26 @@ def follow(nickname):
     db.session.commit()
     flash('You are now following ' + nickname + '!')
     return redirect(url_for('user', nickname=nickname))
-    
+
+@app.route('/unfollow/<nickname>')
+@login_required
+def unfollow(nickname):
+    user = User.query.filter_by(nickname=nickname).first()
+    if user == None:
+        flash('User ' + nickname + ' not found.')
+        return redirect(url_for('index'))
+    if user == g.user:
+        flash('You can\'t unfollow yourself! [autism intensifies]')
+        return redirect(url_for('user', nickname=nickname))
+    u = g.user.unfollow(user)
+    if u is None:
+        flash('Cannot unfollow '  + nickname + '.')
+        return redirect(url_for('user', nickname=nickname))
+    db.session.add(u)
+    db.session.commit()
+    flash('You have unfollowed ' + nickname)
+    return redirect(url_for('user', nickname=nickname))
+
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
