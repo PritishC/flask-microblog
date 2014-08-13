@@ -8,6 +8,7 @@ Created on Sat Jul 19 20:35:35 2014
 from flask.ext.wtf import Form
 from wtforms import TextField, BooleanField, TextAreaField
 from wtforms.validators import Required, Length
+from models import User
 
 class LoginForm(Form):
     openid = TextField('openid', validators=[Required()])
@@ -31,6 +32,8 @@ class EditForm(Form):
             self.nickname.errors.append('This nickname is already in use. Might want to pick a new one m8.')
             return False
         return True
-    
+
+class PostForm(Form):
+    post = TextField('post', validators=[Required()])
     
     

@@ -66,6 +66,9 @@ class User(db.Model):
         return Post.query.join(followers, (followers.c.followed_id==Post.user_id))\
                                .filter(followers.c.follower_id==self.id).order_by\
                                (Post.timestamp.desc())
+
+    def sorted_posts(self):
+        return self.posts.order_by(Post.timestamp_desc())
                                
     def __repr__(self):
         return '<User {0!r}>'.format(self.nickname) # repr formatting.
