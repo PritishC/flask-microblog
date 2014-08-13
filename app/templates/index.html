@@ -1,16 +1,17 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h1>Hi, {{user.nickname}}!</h1>
-<form action="" method="POST" name="post">
+<h1>Hi, {{g.user.nickname}}!</h1>
+<form action="" method="post" name="post">
     {{form.hidden_tag()}}
     <table>
         <tr>
             <td>Say something:</td>
-            <td>{{ form.post(size=30, maxlength=40) }}</td>
+            <td>{{ form.post(size = 30, maxlength = 140) }}</td>
             <td>
-                {% for error in form.errors.post %}
-                <span style="color: red;">[{{error}}]</span><BR>
-                {% endfor %}
+            {% for error in form.errors.post %}
+            <span style="color: red;">[{{error}}]</span><br>
+            {% endfor %}
             </td>
         </tr>
         <tr>
@@ -21,6 +22,8 @@
     </table>
 </form>
 {% for post in posts %}
-<div><p>{{post.author.nickname}} says: <b>{{post.body}}</b></p></div>
+<p>
+  {{post.author.nickname}} says: <b>{{post.body}}</b>
+</p>
 {% endfor %}
 {% endblock %}

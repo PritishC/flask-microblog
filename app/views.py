@@ -11,11 +11,17 @@ from app import app, db, lm, oid
 from forms import LoginForm, EditForm
 from models import User, ROLE_USER, ROLE_ADMIN
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    user = g.user
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, timestamp=datetime.utcnow(), author=g.user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
     posts = [ #an array of fake posts
         {
             'author': {'nickname': 'John'},
@@ -29,7 +35,8 @@ def index():
     return render_template("index.html",
                            title='Home',
                            user=user,
-                           posts=posts)
+                           posts=posts,
+                           form=form)
                            
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
