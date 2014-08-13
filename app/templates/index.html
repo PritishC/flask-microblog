@@ -21,10 +21,9 @@
         </tr>
     </table>
 </form>
+<!-- posts is a Paginate object -->
 {% for post in posts.items %}
-<p>
-  {{post.author.nickname}} says: <b>{{post.body}}</b>
-</p>
+      {% include 'post.html' %}
 {% endfor %}
 {% if posts.has_prev %}<a href="{{ url_for('index', page=posts.prev_num) }}"><< Newer posts</a>{% else %}
         << Newer posts{% endif %} |
