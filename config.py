@@ -28,3 +28,6 @@ MAIL_PASSWORD = 'ifreakingknewit'
 
 # admin list
 ADMINS = ['pritish@guerrillamail.com', 'chakrabortypritish@gmail.com']
+
+# pagination
+POSTS_PER_PAGE = 3
