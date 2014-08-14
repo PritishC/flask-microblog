@@ -6,7 +6,8 @@ Created on Sun Jul 20 13:29:03 2014
 """
 
 from hashlib import md5
-from app import db
+from app import db, app
+import flask.ext.whooshalchemy as whooshalchemy
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -86,6 +87,8 @@ class User(db.Model):
         return new_nickname                
                 
 class Post(db.Model):
+    __searchable__ = ['body']
+
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime)
@@ -93,3 +96,5 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {0!r}'.format(self.body)
+
+whooshalchemy.whoosh_index(app, Post)

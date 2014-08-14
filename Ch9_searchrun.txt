@@ -1,0 +1,25 @@
+>>> from app.models import User, Post
+>>> from app import db
+>>> import datetime
+>>> u = User.query.get(1)
+>>> u
+<User u'chupa'>
+>>> p = Post(body='my first post', timestamp=datetime.datetime.utcnow(), author=u)
+>>> db.session.add(p)
+>>> p = Post(body='2nd post', timestamp=datetime.datetime.utcnow(), author=u)
+>>> p = Post(body='tfw 3rd post', timestamp=datetime.datetime.utcnow(), author=u)
+>>> p = Post(body='2nd post', timestamp=datetime.datetime.utcnow(), author=u)>>> db.session.add(p)
+>>> p = Post(body='tfw 3rd post', timestamp=datetime.datetime.utcnow(), author=u)
+>>> db.session.add(p)
+>>> db.session.commit()
+>>> Post.query.whoosh_search('post').all()
+[<Post u'2nd post', <Post u'2nd post', <Post u'tfw 3rd post', <Post u'tfw 3rd post', <Post u'my first post']
+>>> Post.query.whoosh_search('psecond').all()
+[]
+>>> Post.query.whoosh_search('second').all()
+[]
+>>> Post.query.whoosh_search('tfw').all()
+[<Post u'tfw 3rd post', <Post u'tfw 3rd post']
+>>> Post.query.whoosh_search('tfw OR 2nd').all()
+[<Post u'2nd post', <Post u'2nd post', <Post u'tfw 3rd post', <Post u'tfw 3rd post']
+>>> 
