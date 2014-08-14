@@ -27,7 +27,7 @@ MAIL_USERNAME = 'fakeusepritish@gmail.com'
 MAIL_PASSWORD = 'ifreakingknewit'
 
 # admin list
-ADMINS = ['pritish@guerrillamail.com', 'chakrabortypritish@gmail.com']
+ADMINS = ['fakeusepritish@gmail.com', 'chakrabortypritish@gmail.com']
 
 # pagination
 POSTS_PER_PAGE = 3
