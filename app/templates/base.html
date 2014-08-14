@@ -31,7 +31,8 @@
                   <div class="nav-collapse collapse">
                       {% if g.user.is_authenticated() %}
                       <form class="navbar-search pull-right" action="{{url_for('search')}}" method="post" name="search">
-                          {{g.search_form(size=20, placeholder="Search", class="search-query")}}
+                          {{g.search_form.hidden_tag()}}
+                          {{g.search_form.search(size=20, placeholder="Search", class="search-query")}}
                       </form>
                       {% endif %}
                   </div>
