@@ -15,7 +15,7 @@ def follower_notification(followed, follower):
     send_email("[microblog] {0} is now following you!".format(follower.nickname),
                ADMINS[0],
                [followed.email],
-               render_template("followed_email.txt",
-                               user=followed, follower=follower),
                render_template("follower_email.txt",
+                               user=followed, follower=follower),
+               render_template("follower_email.html",
                                user=followed, follower=follower))
