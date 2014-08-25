@@ -84,7 +84,11 @@ class User(db.Model):
             if User.query.filter_by(nickname = new_nickname).first() == None:
                 break
             version += 1
-        return new_nickname                
+        return new_nickname
+
+    @staticmethod
+    def make_valid_nickname(nickname):
+        return re.sub('[^a-zA-Z0-9_\.]', '', nickname)
                 
 class Post(db.Model):
     __searchable__ = ['body']
