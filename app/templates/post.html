@@ -12,3 +12,4 @@
 {% if post.language != None and post.language != '' and post.language != g.locale %}
         <div><span id="translation{{post.id}}"><a href="#">{{_('Translate')}}</a></span>/div>
 {% endif %}
+<img id="loading{{post.id}}" style="display: none" src="/static/img/loading.gif">
