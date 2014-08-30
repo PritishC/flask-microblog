@@ -107,3 +107,8 @@ def test_follow_posts():
     assert followed_posts[1] == [p3, p2]
     assert followed_posts[2] == [p4, p3]
     assert followed_posts[3] == [p4]
+
+def test_translation():
+    from app.translate import microsoft_translate as mt
+    assert mt(u'English', 'en', 'es') == u'Inglés'
+    assert mt(u'Español', 'es', 'en') == u'Spanish'
