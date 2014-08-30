@@ -9,3 +9,6 @@
         </td>
     </tr>
 </table>
+{% if post.language != None and post.language != '' and post.language != g.locale %}
+        <div><a href="#">{{_('Translate')}}</a></div>
+{% endif %}
