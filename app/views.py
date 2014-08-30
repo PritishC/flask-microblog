@@ -5,10 +5,11 @@ Created on Sat Jul 19 19:23:42 2014
 @author: pritishc
 """
 from datetime import datetime
-from flask import render_template, flash, redirect, session, url_for, request,g
+from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.babel import gettext
 from guess_language import guessLanguage
+from translate import microsoft_translate
 from app import app, db, lm, oid, babel
 from forms import LoginForm, EditForm, PostForm, SearchForm
 from emails import follower_notification
@@ -60,7 +61,16 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-    
+
+@app.route('/translate', methods=['POST'])
+@login_required
+def translate():
+    return jsonify({
+        'text': microsoft_translate(request.form['text'],
+                                    request.form['sourceLang'],
+                                    request.form['destLang'])
+    })
+
 @app.route('/user/<nickname>')
 @app.route('/user/<nickname>/<int:page>')
 @login_required
