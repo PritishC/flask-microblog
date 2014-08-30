@@ -27,9 +27,12 @@ class EditForm(Form):
             return False
         if self.nickname.data == self.original_nickname:
             return True
+        if self.nickname.data != User.make_valid_nickname(self.nickname.data):
+            self.nickname.errors.append(gettext('This nick has invalid characters. Please use letters, numbers, spaces, underscores only.'))
+            return False
         user = User.query.filter_by(nickname = self.nickname.data).first()
         if user != None:
-            self.nickname.errors.append('This nickname is already in use. Might want to pick a new one m8.')
+            self.nickname.errors.append(gettext('This nickname is already in use. Might want to pick a new one m8.'))
             return False
         return True
 
