@@ -9,7 +9,7 @@ class momentjs(object):
         self.timestamp = timestamp
 
     def render(self, format):
-        return Markup("<script>\ndocument.write(moment(\"{0}\").{1};\n</script>".format(self.timestamp.strftime(
+        return Markup("<script>\ndocument.write(moment(\"{0}\").{1});\n</script>".format(self.timestamp.strftime(
             "%Y-%m-%dT%H:%M:%S"), format))
 
     def format(self, fmt):
