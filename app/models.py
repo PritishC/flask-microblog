@@ -8,6 +8,7 @@ Created on Sun Jul 20 13:29:03 2014
 from hashlib import md5
 from app import db, app
 import flask.ext.whooshalchemy as whooshalchemy
+import re
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
