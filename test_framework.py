@@ -112,3 +112,15 @@ def test_translation():
     from app.translate import microsoft_translate as mt
     assert mt(u'English', 'en', 'es') == u'Inglés'
     assert mt(u'Español', 'es', 'en') == u'Spanish'
+
+def test_delete():
+    u = User(nickname='john', email='whatevs@gmail.com')
+    p = Post(body='test', author=u, timestamp=datetime.utcnow())
+    db.session.add(u)
+    db.session.add(p)
+    db.session.commit()
+    p = Post.query.get(1)
+    db.session.remove()
+    db.session = db.create_scoped_session()
+    db.session.delete(p)
+    db.session.commit()
