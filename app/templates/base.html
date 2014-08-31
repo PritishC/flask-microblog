@@ -18,10 +18,9 @@
             $.post('/translate', {
                 text: $(sourceId).text(),
                 sourceLang: sourceLang,
-                destLang: destLang,
-
+                destLang: destLang
             }).done(function(translated) {
-                $(destId).text(translated['text']);
+                $(destId).text(translated['text'])
                 $(loadingId).hide();
                 $(destId).show();
             }).fail(function() {
