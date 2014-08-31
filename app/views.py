@@ -8,13 +8,14 @@ from datetime import datetime
 from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.babel import gettext
+from flask.ext.sqlalchemy import get_debug_queries
 from guess_language import guessLanguage
 from translate import microsoft_translate
 from app import app, db, lm, oid, babel
 from forms import LoginForm, EditForm, PostForm, SearchForm
 from emails import follower_notification
 from models import User, ROLE_USER, ROLE_ADMIN, Post
-from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES, DATABASE_QUERY_TIMEOUT
 
 @babel.localeselector
 def get_locale():
@@ -202,3 +203,26 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results)
+
+@app.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    post = Post.query.get(id)
+    if post == None:
+        flash(gettext('Post not found'))
+        return redirect(url_for('index'))
+    if post.author.id != g.user.id:
+        flash(gettext('You cannot delete this post.'))
+        return redirect(url_for('index'))
+    db.session.delete(post)
+    db.session.commit()
+    flash(gettext('Your post has been deleted.'))
+    return redirect(url_for('index'))
+
+@app.after_request
+def after_request(response):
+    for query in get_debug_queries():
+        if query.duration >= DATABASE_QUERY_TIMEOUT:
+            app.logger.warning("SLOW QUERY: %s\nParameters: %s\nDuration: %fs\nContext: %s\n" %
+                               (query.statement, query.parameters, query.duration, query.context))
+    return response

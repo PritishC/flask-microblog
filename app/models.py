@@ -8,6 +8,7 @@ Created on Sun Jul 20 13:29:03 2014
 from hashlib import md5
 from app import db, app
 import flask.ext.whooshalchemy as whooshalchemy
+import re
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -71,7 +72,7 @@ class User(db.Model):
     def sorted_posts(self):
         return self.posts.order_by(Post.timestamp_desc())
                                
-    def __repr__(self):
+    def __repr__(self): #pragma: no cover
         return '<User {0!r}>'.format(self.nickname) # repr formatting.
     
     @staticmethod
@@ -99,7 +100,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     language = db.Column(db.String(5))
 
-    def __repr__(self):
+    def __repr__(self): #pragma: no cover
         return '<Post {0!r}'.format(self.body)
 
 whooshalchemy.whoosh_index(app, Post)

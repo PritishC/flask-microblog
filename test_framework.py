@@ -34,14 +34,11 @@ def test_make_unique_nickname():
     u = User(nickname = 'john', email = 'john@example.com')
     db.session.add(u)
     db.session.commit()
+    nickname = User.make_unique_nickname('susan')
+    assert nickname == 'susan'
     nickname = User.make_unique_nickname('john')
     assert nickname != 'john'
-    u = User(nickname = nickname, email = 'susan@example.com')
-    db.session.add(u)
-    db.session.commit()
-    nickname2 = User.make_unique_nickname('john')
-    assert nickname2 != 'john'
-    assert nickname2 != nickname
+    #assert nickname2 != nickname
     
 def test_follow():
     u1 = User(nickname='john', email='john@lol.com')
@@ -112,3 +109,30 @@ def test_translation():
     from app.translate import microsoft_translate as mt
     assert mt(u'English', 'en', 'es') == u'Inglés'
     assert mt(u'Español', 'es', 'en') == u'Spanish'
+
+def test_delete():
+    u = User(nickname='john', email='whatevs@gmail.com')
+    p = Post(body='test', author=u, timestamp=datetime.utcnow())
+    db.session.add(u)
+    db.session.add(p)
+    db.session.commit()
+    p = Post.query.get(1)
+    db.session.remove()
+    db.session = db.create_scoped_session()
+    db.session.delete(p)
+    db.session.commit()
+
+def test_user():
+    # make valid nicks
+    n = User.make_valid_nickname('John_123')
+    assert n == 'John_123'
+    n = User.make_valid_nickname('John_[123]\n')
+    assert n == 'John_123'
+    # create user
+    u = User(nickname = 'john', email = 'john@example.com')
+    db.session.add(u)
+    db.session.commit()
+    assert u.is_authenticated() == True
+    assert u.is_active() == True
+    assert u.is_anonymous() == False
+    assert u.id == int(u.get_id())
