@@ -40,3 +40,7 @@ MAX_SEARCH_RESULTS = 50
 
 # supported langs for Babel
 LANGUAGES = {'en': 'English', 'es': 'Español',}
+
+# Microsoft Translator service details
+MS_TRANSLATOR_CLIENT_ID = "flask-microblog"
+MS_TRANSLATOR_CLIENT_SECRET = "z3WPPknJxbNIj+hPASkiYqluDQNkBOijARxDFsVtTYY="

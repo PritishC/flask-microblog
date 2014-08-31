@@ -6,5 +6,5 @@ import sys
 if sys.platform == 'win32':
     pybabel = 'flask\\Scripts\\pybabel'
 else:
-    pybabel = 'ircflask/bin/pybabel'
+    pybabel = 'pybabel'
 os.system(pybabel + ' compile -d app/translations')

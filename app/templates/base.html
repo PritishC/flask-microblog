@@ -10,6 +10,26 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/moment.js"></script>
+    <script>
+        function translate(sourceLang, destLang, sourceId, destId, loadingId)
+        {
+            $(destId).hide();
+            $(loadingId).show();
+            $.post('/translate', {
+                text: $(sourceId).text(),
+                sourceLang: sourceLang,
+                destLang: destLang
+            }).done(function(translated) {
+                $(destId).text(translated['text'])
+                $(loadingId).hide();
+                $(destId).show();
+            }).fail(function() {
+                $(destId).text("{{ _('Error: Could not contact server') }}");
+                $(loadingId).hide();
+                $(destId).show();
+            });
+        }
+    </script>
     {% if g.locale != 'en' %}
     <script src="static/js/moment-{{g.locale}}.min.js"></script>
     {% endif %}
