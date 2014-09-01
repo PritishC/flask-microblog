@@ -7,7 +7,12 @@ Created on Sun Jul 20 13:29:03 2014
 
 from hashlib import md5
 from app import db, app
-import flask.ext.whooshalchemy as whooshalchemy
+from config import WHOOSH_ENABLED
+
+if WHOOSH_ENABLED:
+    import flask.ext.whooshalchemy as whooshalchemy
+    whooshalchemy.whoosh_index(app, Post)
+
 import re
 
 ROLE_USER = 0
@@ -102,5 +107,3 @@ class Post(db.Model):
 
     def __repr__(self): #pragma: no cover
         return '<Post {0!r}'.format(self.body)
-
-whooshalchemy.whoosh_index(app, Post)

@@ -52,7 +52,7 @@
               <li><a href="{{ url_for('logout') }}">{{_('Logout')}}</a></li>
               {% endif %}
             </ul>
-            {% if g.user.is_authenticated() %}
+            {% if g.user.is_authenticated() and g.search_enabled %}
             <form class="navbar-form navbar-right" action="{{url_for('search')}}" method="post" name="search">{{g.search_form.hidden_tag()}}{{g.search_form.search(size=20,placeholder="Search",class="search-query")}}</form>
             {% endif %}
         </div>
