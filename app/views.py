@@ -15,7 +15,7 @@ from app import app, db, lm, oid, babel
 from forms import LoginForm, EditForm, PostForm, SearchForm
 from emails import follower_notification
 from models import User, ROLE_USER, ROLE_ADMIN, Post
-from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES, DATABASE_QUERY_TIMEOUT
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES, DATABASE_QUERY_TIMEOUT, WHOOSH_ENABLED
 
 @babel.localeselector
 def get_locale():
@@ -188,6 +188,7 @@ def before_request():
         db.session.commit()
         g.search_form = SearchForm()
     g.locale = get_locale()
+    g.search_enabled = WHOOSH_ENABLED
 
 @app.route('/search', methods=['POST'])
 @login_required
