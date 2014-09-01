@@ -45,6 +45,7 @@ POSTS_PER_PAGE = 3
 # text search
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
 MAX_SEARCH_RESULTS = 50
+WHOOSH_ENABLED = os.environ.get('HEROKU') is None # whoosh not work on Heroku
 
 # supported langs for Babel
 LANGUAGES = {'en': 'English', 'es': 'Español',}
