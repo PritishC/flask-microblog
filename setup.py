@@ -1,4 +1,4 @@
-#!/home/pritishc/Envs/flaskhost/bin/python
+#!/home/pritishc/.virtualenvs/flaskhost/bin/python
 import os, subprocess, sys
 subprocess.call(['python', 'virtualenv.py', 'flask'])
 if sys.platform == 'win32':
