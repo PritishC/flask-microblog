@@ -9,7 +9,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 # database
 if os.environ.get('HEROKU') is not None:
-    SQLALCHEMY_DATABASE_URI = os.environ['HEROKU_POSTGRESQL_GREEN_URL']
+    SQLALCHEMY_DATABASE_URI = os.environ['HEROKU_POSTGRESQL_NAVY_URL']
 elif os.environ.get('DATABASE_URL') is None:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 else:
