@@ -53,5 +53,5 @@ docs/_build/
 target/# Database Files
 *.db
 
-# pyBabel
-*.mo
+# Database
+app.db
